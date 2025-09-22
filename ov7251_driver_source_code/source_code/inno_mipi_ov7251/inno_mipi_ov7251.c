@@ -22,6 +22,7 @@
 #include <linux/module.h>
 #include <linux/of_graph.h>
 #include <linux/slab.h>
+#include <linux/string.h>
 #include <linux/videodev2.h>
 #include <media/v4l2-ctrls.h>
 #include <media/v4l2-device.h>
@@ -702,7 +703,7 @@ static int ov7251_detect(struct i2c_client *client, struct i2c_board_info *info)
 {
 	//struct i2c_adapter *adapter = client->adapter;
 
-	strlcpy(info->type, "ov7251", I2C_NAME_SIZE);
+	strscpy(info->type, "ov7251", I2C_NAME_SIZE);
 
 	return 0;
 }
@@ -825,7 +826,7 @@ static int ov7251_probe(struct i2c_client *client,
 	return ret;
 }
 #if LINUX_VERSION_CODE>= KERNEL_VERSION(6,1,0) 
-void ov7251_remove(struct i2c_client *client)
+static void ov7251_remove(struct i2c_client *client)
 #else
 static int ov7251_remove(struct i2c_client *client)
 #endif	
